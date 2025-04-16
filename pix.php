@@ -1,7 +1,7 @@
 <?php
 // Substitua os valores abaixo com suas credenciais e endpoint reais
 $secretKey = 'd2ff7bd819cc03e0b9902b1694b97922';
-$endpoint = 'https://crassbrasil.github.io/pix/'; // edite para o endpoint real
+$endpoint = 'https://api-production-0feb.up.railway.app'; // edite para o endpoint real
 
 header('Content-Type: application/json');
 
