@@ -1,6 +1,6 @@
 <?php
 // Substitua os valores abaixo com suas credenciais e endpoint reais
-$secretKey = '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';
+$secretKey = 'shpat_';
 $endpoint = 'https://crassbrasil.github.io/pix/'; // edite para o endpoint real
 
 header('Content-Type: application/json');
