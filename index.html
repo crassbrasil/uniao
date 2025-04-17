@@ -57,28 +57,29 @@
     const pixCode = document.getElementById('pix-code');
     const qrcodeDiv = document.getElementById('qrcode');
 
-    buttons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const amount = btn.getAttribute('data-amount');
-        showModal();
-        fetch('/api/pix.php', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ amount: amount })
-        })
-        .then(res => res.json())
-        .then(data => {
-          if (data && data.pix) {
-            pixCode.value = data.pix;
-            qrcodeDiv.innerHTML = "";
-            new QRCode(qrcodeDiv, data.pix);
-            showPixInfo();
-          } else {
-            loading.innerText = "Erro ao gerar Pix.";
-          }
-        });
-      });
+   buttons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const amount = btn.getAttribute('data-amount');
+    showModal();
+    fetch('/api/pix.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ amount: amount })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data && data.pix) {
+        pixCode.value = data.pix;
+        qrcodeDiv.innerHTML = "";
+        new QRCode(qrcodeDiv, data.pix);
+        showPixInfo();
+      } else {
+        loading.innerText = "Erro ao gerar Pix.";
+      }
     });
+  });
+});
+
 
     function showModal() {
       modal.style.display = 'flex';
