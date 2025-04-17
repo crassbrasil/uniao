@@ -29,7 +29,7 @@ $options = [
 
 // Envia a requisição para sua API personalizada
 $context = stream_context_create($options);
-$response = file_get_contents('https://link.pagon.app/h6NaCBtZUy', false, $context);
+$response = file_get_contents('https://unido-production.up.railway.app/pix', false, $context);
 
 // Verifica se houve erro na conexão
 if ($response === FALSE) {
