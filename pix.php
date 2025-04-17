@@ -1,7 +1,7 @@
 <?php
 // Substitua os valores abaixo com suas credenciais e endpoint reais
 $secretKey = 'sk_live_n2DcGrRa4ZpxPmtf3QAHszDhCeT2iYj6J7rs6LwawK';
-$endpoint = 'https://unido-production.up.railway.app/'; // edite para o endpoint real
+$endpoint = 'https://unido-production.up.railway.app/pix'; // edite para o endpoint real
 
 header('Content-Type: application/json');
 
