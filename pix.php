@@ -1,43 +1,42 @@
 <?php
-// Substitua os valores abaixo com suas credenciais e endpoint reais
-$secretKey = 'sk_live_n2DcGrRa4ZpxPmtf3QAHszDhCeT2iYj6J7rs6LwawK';
-$endpoint = 'https://unido-production.up.railway.app/pix'; // edite para o endpoint real
-
+// Define o cabeçalho para resposta JSON
 header('Content-Type: application/json');
 
+// Recebe os dados enviados via JSON do frontend
 $input = json_decode(file_get_contents('php://input'), true);
 $amount = isset($input['amount']) ? $input['amount'] : null;
 
-if (!$amount) {
+// Valida o valor
+if (!$amount || !is_numeric($amount)) {
   echo json_encode(['error' => 'Valor inválido']);
   exit;
 }
 
+// Prepara os dados que serão enviados para sua API personalizada
 $data = [
-  'value' => $amount,
-  'currency' => 'BRL',
-  'description' => 'Doação via Pix'
+  'value' => $amount
 ];
 
+// Configura a requisição POST para sua API (Railway)
 $options = [
   'http' => [
-    'header'  => "Content-type: application/json
-" .
-                 "Authorization: Bearer $secretKey
-",
+    'header'  => "Content-type: application/json\r\n",
     'method'  => 'POST',
     'content' => json_encode($data),
+    'ignore_errors' => true // permite ver resposta mesmo em caso de erro HTTP
   ]
 ];
 
+// Envia a requisição para sua API personalizada
 $context = stream_context_create($options);
-$response = file_get_contents($endpoint, false, $context);
+$response = file_get_contents('https://unido-production.up.railway.app/pix', false, $context);
 
+// Verifica se houve erro na conexão
 if ($response === FALSE) {
-  echo json_encode(['error' => 'Erro ao conectar à API']);
+  echo json_encode(['error' => 'Erro ao conectar à API Nexus personalizada']);
   exit;
 }
 
-// Supondo que a resposta contenha o campo 'pix' com o código copia e cola
+// Retorna a resposta da API para o frontend
 echo $response;
 ?>
