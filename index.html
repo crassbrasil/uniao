@@ -50,52 +50,54 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script>
-    const buttons = document.querySelectorAll('.btn');
-    const modal = document.getElementById('modal');
-    const loading = document.getElementById('loading');
-    const pixInfo = document.getElementById('pix-info');
-    const pixCode = document.getElementById('pix-code');
-    const qrcodeDiv = document.getElementById('qrcode');
+  const buttons = document.querySelectorAll('.btn');
+  const modal = document.getElementById('modal');
+  const loading = document.getElementById('loading');
+  const pixInfo = document.getElementById('pix-info');
+  const pixCode = document.getElementById('pix-code');
+  const qrcodeDiv = document.getElementById('qrcode');
 
-   buttons.forEach(btn => {
-  btn.addEventListener('click', () => {
-    const amount = btn.getAttribute('data-amount');
-    showModal();
-    fetch('/api/pix.php', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amount: amount })
-    })
-    .then(res => res.json())
-    .then(data => {
-      if (data && data.pix) {
-        pixCode.value = data.pix;
-        qrcodeDiv.innerHTML = "";
-        new QRCode(qrcodeDiv, data.pix);
-        showPixInfo();
-      } else {
-        loading.innerText = "Erro ao gerar Pix.";
-      }
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const amount = btn.getAttribute('data-amount');
+      showModal();
+      fetch('pix.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: amount }) // envia para o pix.php local
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.copia_cola) {
+          pixCode.value = data.copia_cola;
+          qrcodeDiv.innerHTML = "";
+          new QRCode(qrcodeDiv, data.copia_cola);
+          showPixInfo();
+        } else {
+          loading.innerText = "Erro ao gerar Pix.";
+        }
+      })
+      .catch(() => {
+        loading.innerText = "Erro ao conectar com o servidor.";
+      });
     });
   });
-});
 
+  function showModal() {
+    modal.style.display = 'flex';
+    loading.style.display = 'block';
+    pixInfo.classList.add('hidden');
+  }
 
-    function showModal() {
-      modal.style.display = 'flex';
-      loading.style.display = 'block';
-      pixInfo.classList.add('hidden');
-    }
+  function showPixInfo() {
+    loading.style.display = 'none';
+    pixInfo.classList.remove('hidden');
+  }
 
-    function showPixInfo() {
-      loading.style.display = 'none';
-      pixInfo.classList.remove('hidden');
-    }
-
-    function copyPix() {
-      pixCode.select();
-      document.execCommand("copy");
-    }
-  </script>
+  function copyPix() {
+    pixCode.select();
+    document.execCommand("copy");
+  }
+</script>
 </body>
 </html>
