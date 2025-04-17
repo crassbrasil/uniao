@@ -1,7 +1,7 @@
 <?php
 // Substitua os valores abaixo com suas credenciais e endpoint reais
-$secretKey = 'd2ff7bd819cc03e0b9902b1694b97922';
-$endpoint = 'https://primary-production-49ab.up.railway.app'; // edite para o endpoint real
+$secretKey = 'sk_live_n2DcGrRa4ZpxPmtf3QAHszDhCeT2iYj6J7rs6LwawK';
+$endpoint = 'https://unido-production.up.railway.app/'; // edite para o endpoint real
 
 header('Content-Type: application/json');
 
